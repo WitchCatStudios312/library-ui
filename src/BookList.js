@@ -21,6 +21,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import BookFormDialog from "./BookForm";
 
+//TODO - implement save and fix editing functionality, implement custom grid field for rating, implement filtering, etc.
 
 function EditToolbar({handleAddClick}) {
   return (
@@ -210,88 +211,3 @@ export default function BookList() {
   );
 }
 
-
-
-
-/* import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  DataGrid,
-  GridRowsProp,
-  GridRowModesModel,
-  GridRowModes,
-  GridColDef,
-  GridToolbarContainer,
-  GridActionsCellItem,
-  GridEventListener,
-  GridRowId,
-  GridRowModel,
-  GridRowEditStopReasons 
-} from '@mui/x-data-grid';
-import Rating from '@mui/material/Rating';
-import Checkbox from '@mui/material/Checkbox';
-
-import Box from '@mui/material/Box';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
-
-const columns = [
-  { field: 'Title', headerName: 'Title', flex: 1, editable: true },
-  { field: 'SeriesNum', headerName: '# in Series', flex: 1, editable: true },
-  { field: 'Author', headerName: 'Author', flex: 1,editable: false },
-  { field: 'Category', headerName: 'Category', flex: 1, editable: false },
-  { field: 'Recommended', headerName: 'Recommended', flex: 1, editable: false, renderCell: (props) => <Rating defaultValue={props.row.recommended} precision={0.5} readOnly/> },
-  { field: 'Format', headerName: 'Format', flex: 1, editable: true },
-  { field: 'Lendable', headerName: 'Lendable', flex: 1, editable: true, renderCell: (props) => <Checkbox checked={props.row.lendable} readOnly/>  },
-  { field: 'Read', headerName: 'Read', flex: 1, editable: true, renderCell: (props) => <Checkbox checked={props.row.read} readOnly/> },
-  { field: 'PurchaseDate', headerName: 'Purchased Date', flex: 1, editable: true },
-];
-
-const tableData = [
-    { id: 1, title: 'Test Book', seriesNum: '', author: 'Ron Swanson', category: 'Books', recommended: 4.5, lendable: false, format: 'kindle', read: true, purchaseDate: '8/2/23' },
-    { id: 2, title: 'Example', seriesNum: '2', author: 'Doloros Featherton Hat', category: 'Fun', recommended: 5, lendable: true, format: 'hard cover', read: true, purchaseDate: '8/2/23' },
-  ];
-
-const BookList = () => {
-  const [tableData, setTableData] = useState([]);
-
-  //for error handling
-  // const [iserror, setIserror] = useState(false);
-  // const [errorMessages, setErrorMessages] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8000/book/")
-      .then((data) => data.json())
-      .then((data) => setTableData(data))
-  }, [])
-
-  console.log(tableData);
-  
-  const processRowUpdate = useCallback((newRow) => {
-    fetch("http://localhost:8000/book/")
-      .then((data) => data.json())
-      .then((data) => setTableData(data))
-  }, []);
-
-  // const handleProcessRowUpdateError = React.useCallback((error) => {
-  //   setSnackbar({ children: error.message, severity: 'error' });
-  // }, []);
-
-  return (
-    <div style={{ height: 700, width: '100%' }}>
-      <DataGrid
-        getRowId={(row) => row._id}
-        rows={tableData}
-        columns={columns}
-        pageSize={12}
-        editMode='row'
-        processRowUpdate={processRowUpdate}
-        // onProcessRowUpdateError={handleProcessRowUpdateError}
-      />
-    </div>
-  )
-}
-
-export default BookList; */
