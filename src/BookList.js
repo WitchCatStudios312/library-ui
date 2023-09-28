@@ -19,31 +19,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import BookForm from "./BookForm";
+import BookFormDialog from "./BookForm";
 
 
-function randomInteger() {
-  var retval = Math.floor(Math.random() * 100000);
-  console.log("randomInteger generated " + retval);
-  return retval;
-}
-
-function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
-  //Add Button
-  const handleClick = () => {
-    const _id = 8;
-    setRows((oldRows) => [{ _id, name: '', age: '', isNew: true }, ...oldRows]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [_id]: { mode: GridRowModes.Edit, fieldToFocus: 'Title' },
-    }));
-  };
-
+function EditToolbar({handleAddClick}) {
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add Book
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleAddClick}>
+        New Book
       </Button>
     </GridToolbarContainer>
   );
@@ -54,12 +37,27 @@ export default function BookList() {
   const [rowModesModel, setRowModesModel] = React.useState(
     {}
   );
+  const [isFormOpen, setFormOpen] = React.useState(false);
 
   React.useEffect(() => {
     fetch("http://localhost:8000/book/")
       .then((data) => data.json())
       .then((data) => setRows(data))
   }, []);
+
+   const handleAddClick = () => {
+    setFormOpen(true);
+    // const _id = 8;
+    // setRows((oldRows) => [{ _id, name: '', age: '', isNew: true }, ...oldRows]);
+    // setRowModesModel((oldModel) => ({
+    //   ...oldModel,
+    //   [_id]: { mode: GridRowModes.Edit, fieldToFocus: 'Title' },
+    // }));
+  };
+  
+    const handleFormClose = () => {
+      setFormOpen(false);
+  };
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -200,9 +198,13 @@ export default function BookList() {
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { setRows, setRowModesModel, handleAddClick },
         }}
         experimentalFeatures={{ newEditingApi: true }}
+      />
+      <BookFormDialog
+        open={isFormOpen}
+        handleClose={handleFormClose}
       />
     </Box>
   );
